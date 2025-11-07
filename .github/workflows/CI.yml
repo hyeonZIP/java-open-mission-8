@@ -3,9 +3,13 @@ permissions:
   contents: read
 on:
   pull_request:
-    branches: [ main, develop, "feature/**" ]
+    branches:
+      - "**"
   push:
-    branches: [ main, develop, "feature/**" ]
+    branches:
+      - "feature/**"
+      - "refactor/**"
+      - "hotfix/**"
 
 jobs:
   build-and-test:
