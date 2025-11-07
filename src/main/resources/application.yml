@@ -1,3 +1,6 @@
 spring:
   application:
     name: java-open-mission-8
+logging:
+  file:
+    name: /home/ubuntu/app/application.log
