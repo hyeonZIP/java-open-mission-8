@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # 헬스체크 (Spring Boot Actuator 사용 시)
+sleep 60
+
 for i in {1..10}; do
   echo "헬스체크 시도 $i/10"
 
