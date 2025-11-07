@@ -39,7 +39,11 @@ jobs:
         run: ./gradlew build -x test
 
       - name: "빌드 파일 압축"
-        run: zip -r ./${{github.sha}}.zip .
+        run: |
+          zip -r ./${{github.sha}}.zip \
+            appspec.yml \
+            scripts/ \
+            build/libs/*.jar
 
       - name: "빌드 아티팩트 업로드"
         uses: actions/upload-artifact@v5
