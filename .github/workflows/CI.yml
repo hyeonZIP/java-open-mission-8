@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: "Gradle Wrapper 검증"
-        uses: gradle/actions/wrapper-validation@v3
+        uses: gradle/actions/wrapper-validation@v5
 
       - name: "자바21 설치"
         uses: actions/setup-java@v5
