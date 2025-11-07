@@ -4,3 +4,11 @@ spring:
 logging:
   file:
     name: /home/ubuntu/app/application.log
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
