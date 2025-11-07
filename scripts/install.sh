@@ -2,6 +2,16 @@
 
 APP_HOME=/home/ubuntu/app
 
+# Java 21 설치 확인
+if ! command -v java &> /dev/null; then
+    echo "Java 21 설치"
+    sudo apt-get update
+    sudo apt-get install -y openjdk-21-jdk
+fi
+
+# Java 버전 확인
+java -version
+
 # 디렉토리가 없으면 생성
 if [ ! -d "$APP_HOME" ]; then
   mkdir -p $APP_HOME

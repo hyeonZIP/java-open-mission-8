@@ -21,7 +21,7 @@ permissions:
 
 hooks:
   BeforeInstall:
-    - location: scripts/before_install.sh
+    - location: scripts/install.sh
       timeout: 300
       runas: ubuntu
   ApplicationStart:
