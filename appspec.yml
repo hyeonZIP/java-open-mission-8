@@ -11,6 +11,14 @@ permissions:
     owner: ubuntu
     group: ubuntu
     mode: 755
+    type:
+      - directory
+  - object: /home/ubuntu/app
+    owner: ubuntu
+    group: ubuntu
+    mode: 644
+    type:
+      - file
 
 hooks:
   ApplicationStop:
