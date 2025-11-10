@@ -28,6 +28,10 @@ jobs:
           java-version: 21
           cache: gradle
 
+      - name: "배포 프로필 생성"
+        run: |
+          echo "${{secrets.APPLICATION_PROD_YML}}" > src/main/resources/application-prod.yml
+
       - name: "빌드 권한 설정"
         run: chmod +x ./gradlew
 
