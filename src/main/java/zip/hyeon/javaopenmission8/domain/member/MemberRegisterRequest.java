@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotBlank;
 public record MemberRegisterRequest(
         @NotBlank String githubId,
         @NotBlank String username,
-        @Email String email) {
+        @NotBlank @Email String email) {
 }
