@@ -35,19 +35,19 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
-    public static Member register(String githubId, String username, String email) {
+    public static Member register(MemberRegisterRequest request) {
         Member member = new Member();
 
-        member.githubId = requireNonNull(githubId);
-        member.username = requireNonNull(username);
-        member.email = new Email(email);
-        member.status = MemberStatus.PENDING;
+        member.githubId = requireNonNull(request.githubId());
+        member.username = requireNonNull(request.username());
+        member.email = new Email(request.email());
+        member.status = MemberStatus.ACTIVATED;
 
         return member;
     }
 
     public void activate() {
-        state(status == MemberStatus.PENDING, "PENDING 상태가 아닙니다.");
+        state(status != MemberStatus.ACTIVATED, "이미 ACTIVATED 입니다.");
 
         this.status = MemberStatus.ACTIVATED;
     }

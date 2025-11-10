@@ -11,18 +11,17 @@ class MemberTest {
 
     @BeforeEach
     void setUp() {
-        member = Member.register("12345", "hyeonZIP", "abcde@naver.com");
+        member = Member.register(MemberFixture.createMemberRegisterRequest());
     }
 
     @Test
     void registerMember() {
-        assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
+        assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVATED);
     }
 
     @Test
     void activate() {
-        assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
-
+        member.deactivate();
         member.activate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVATED);
@@ -30,14 +29,11 @@ class MemberTest {
 
     @Test
     void activateFail() {
-        member.activate();
-
         assertThatThrownBy(() -> member.activate()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void deactivated() {
-        member.activate();
         member.deactivate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
@@ -45,9 +41,6 @@ class MemberTest {
 
     @Test
     void deactivatedFail() {
-        assertThatThrownBy(() -> member.deactivate()).isInstanceOf(IllegalStateException.class);
-
-        member.activate();
         member.deactivate();
 
         assertThatThrownBy(() -> member.deactivate()).isInstanceOf(IllegalStateException.class);
