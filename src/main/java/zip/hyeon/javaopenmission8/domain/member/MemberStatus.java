@@ -4,5 +4,6 @@ public enum MemberStatus {
     ANONYMOUS,
     ACTIVATED,
     DEACTIVATED,
-    PENDING
+    PENDING,
+    BANNED
 }
