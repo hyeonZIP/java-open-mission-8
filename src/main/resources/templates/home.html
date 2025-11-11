@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review With Me</title>
+    <style>
+        body {
+            background-color: #212225;
+            color: #fff;
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #191a1d;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-left: 16px;
+        }
+        .navbar-menu {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-menu a {
+            color: #bcbcbc;
+            text-decoration: none;
+            margin-right: 24px;
+            font-size: 14px;
+        }
+        .navbar-menu a:last-child {
+            margin-right: 0;
+            color: #5499ef;
+        }
+        .main-container {
+            padding: 48px 48px 0 48px;
+        }
+        .pr-form {
+            background: #232429;
+            padding: 32px 32px 32px 32px;
+            margin-bottom: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .pr-form-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .pr-form-input {
+            flex: 1;
+            background: #35363a;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            color: #bcbcbc;
+            border-radius: 4px;
+            margin-right: 36px;
+        }
+        .pr-form-btn {
+            background: #5499ef;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .list-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            margin-bottom: 18px;
+        }
+        .filter-btn {
+            background: #35363a;
+            color: #bcbcbc;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 16px;
+            margin-right: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: #191a1d;
+            color: #fff;
+        }
+        .search-input {
+            background: #35363a;
+            color: #bcbcbc;
+            border: none;
+            border-radius: 3px;
+            padding: 7px 16px;
+            margin-left: 6px;
+            font-size: 13px;
+            width: 130px;
+        }
+        .search-btn {
+            background: #35363a;
+            color: #bcbcbc;
+            border: none;
+            border-radius: 3px;
+            padding: 7px 16px;
+            margin-left: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .pr-card {
+            background: #232429;
+            margin-bottom: 22px;
+            border-radius: 6px;
+            padding: 22px 20px;
+            display: flex;
+        }
+        .pr-thumbnail {
+            width: 70px;
+            height: 70px;
+            background: #34353a;
+            border-radius: 6px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .pr-content {
+            flex: 1;
+        }
+        .pr-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .pr-meta {
+            font-size: 13px;
+            color: #bcbcbc;
+            margin-bottom: 7px;
+        }
+        .pr-stats {
+            font-size: 13px;
+            color: #7bacfc;
+            margin-bottom: 8px;
+        }
+        .pr-message {
+            background: #35363a;
+            color: #fff;
+            border-radius: 3px;
+            padding: 10px 14px;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+        .pr-actions {
+            display: flex;
+            flex-direction: column;
+            margin-left: 18px;
+        }
+        .pr-action-btn {
+            background: #35363a;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 9px 12px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .pr-action-btn:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- 네비게이션 바 -->
+<div th:replace="fragments/header :: mainHeader"></div>
+<div class="main-container">
+    <!-- PR 등록 폼 -->
+    <div class="pr-form">
+        <div>
+            <div class="pr-form-label">PR 링크 등록</div>
+            <input type="text" class="pr-form-input" placeholder="https://github.com/woowacourse-precourse/.../pull/1">
+        </div>
+        <button class="pr-form-btn">로그인 해주세요!</button>
+    </div>
+    <!-- PR 리스트 타이틀, 필터, 검색 등 -->
+    <div class="list-title">Pull Request List</div>
+    <div class="btn-group">
+        <!-- 반복문으로 필터 버튼 생성 가능 -->
+        <th:block th:each="filterBtn : ${filterButtons}">
+            <button th:text="${filterBtn.label}" th:class="'filter-btn' + (${filterBtn.isActive} ? ' active':'')"></button>
+        </th:block>
+        <!-- 추가 특정 필터, 검색 등 구성 -->
+        <input type="text" class="search-input" th:placeholder="${searchPlaceholder}" th:value="${searchText}">
+        <button class="search-btn">검색</button>
+    </div>
+    <!-- PR 리스트 반복 출력 -->
+    <!--
+        ${prList} : 컨트롤러에서 전달한 PR 리스트
+        각 PR 객체 =
+          - thumbnail
+          - title
+          - meta
+          - stats
+          - message
+          - 상세/리뷰 버튼 액션
+    -->
+    <th:block th:each="pr : ${prList}">
+        <div class="pr-card">
+            <div class="pr-thumbnail">
+                <!-- 썸네일 이미지 삽입 가능 -->
+                <!-- <img th:src="${pr.thumbnail}" width="70" height="70" /> -->
+            </div>
+            <div class="pr-content">
+                <div class="pr-title" th:text="${pr.title}">PR 제목</div>
+                <div class="pr-meta" th:text="${pr.meta}">작성자, 시간</div>
+                <div class="pr-stats" th:text="${pr.stats}">커밋, 리뷰, 참여자 수</div>
+                <div class="pr-message" th:text="${pr.message}">리뷰 메시지/내용</div>
+            </div>
+            <div class="pr-actions">
+                <button class="pr-action-btn" th:text="'상세보기'" th:onclick="'location.href=\'/detail/' + ${pr.id} + '\';'"></button>
+                <button class="pr-action-btn" th:text="'리뷰하러 가기'" th:onclick="'location.href=\'/review/' + ${pr.id} + '\';'"></button>
+            </div>
+        </div>
+    </th:block>
+    <!-- 끝 -->
+</div>
+</body>
+</html>

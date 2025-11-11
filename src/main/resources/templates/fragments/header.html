@@ -1,0 +1,14 @@
+<!-- 헤더 fragment (header.html) -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="mainHeader">
+    <div class="navbar">
+        <div class="navbar-title">Review With Me</div>
+        <div class="navbar-menu">
+            <a th:href="@{/home}">홈</a>
+            <a th:href="@{/ranking}">랭킹</a>
+            <a th:href="@{/login/github}">로그인</a>
+        </div>
+    </div>
+</th:block>
+</html>
