@@ -3,6 +3,7 @@ spring:
     activate:
       on-profile: dev
     import: optional:classpath:application-oauth2.yml
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -13,6 +14,23 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  session:
+    jdbc:
+      initialize-schema: embedded
+      table-name: spring_session
+      schema: classpath:session.sql
+    timeout: 1m
+
+server:
+  servlet:
+    session:
+      cookie:
+        name: JESSIONID
+        path: /
+        http-only: true
+        secure: false
+        same-site: lax
 
 logging:
   level:
