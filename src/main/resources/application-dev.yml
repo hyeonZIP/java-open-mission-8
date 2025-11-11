@@ -2,6 +2,7 @@ spring:
   config:
     activate:
       on-profile: dev
+    import: optional:classpath:application-oauth2.yml
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
