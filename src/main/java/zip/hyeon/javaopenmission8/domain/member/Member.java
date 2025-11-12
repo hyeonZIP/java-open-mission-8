@@ -31,6 +31,9 @@ public class Member {
     @Column(nullable = false)
     private String username;
 
+    @Column
+    private String profileImageUrl;
+
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
@@ -45,6 +48,7 @@ public class Member {
         member.username = requireNonNull(request.username());
         member.status = MemberStatus.ACTIVATED;
         member.role = MemberRole.ROLE_MEMBER;
+        member.profileImageUrl = request.profileImageUrl();
 
         return member;
     }

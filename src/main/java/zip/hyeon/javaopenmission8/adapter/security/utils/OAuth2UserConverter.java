@@ -8,6 +8,7 @@ import zip.hyeon.javaopenmission8.domain.member.Provider;
 public class OAuth2UserConverter {
     private static final String GITHUB_PROVIDER_ID = "id";
     private static final String GITHUB_USERNAME = "login";
+    private static final String GITHUB_PROFILE_IMAGE_URL = "avatar_url";
 
     public static OAuth2UserConverterResponse convert(String registrationId, OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -22,7 +23,8 @@ public class OAuth2UserConverter {
     private static OAuth2UserConverterResponse ofGithub(Map<String, Object> attributes) {
         String githubId = String.valueOf(attributes.get(GITHUB_PROVIDER_ID));
         String username = String.valueOf(attributes.get(GITHUB_USERNAME));
+        String profileImageUrl = String.valueOf(attributes.get(GITHUB_PROFILE_IMAGE_URL));
 
-        return new OAuth2UserConverterResponse(attributes, Provider.GITHUB, githubId, username);
+        return new OAuth2UserConverterResponse(attributes, Provider.GITHUB, githubId, username, profileImageUrl);
     }
 }
