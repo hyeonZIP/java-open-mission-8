@@ -48,10 +48,16 @@ class MemberTest {
 
     @Test
     void updateMember() {
+        Provider previousProvider = member.getProvider();
+        String providerId = member.getProviderId();
+
         MemberRegisterRequest updateRequest = MemberFixture.updateMemberRegisterRequest();
 
         member.update(updateRequest);
 
         assertThat(member.getUsername()).isEqualTo(updateRequest.username());
+        assertThat(member.getProfileImageUrl()).isEqualTo(updateRequest.profileImageUrl());
+        assertThat(previousProvider).isEqualTo(member.getProvider());
+        assertThat(providerId).isEqualTo(member.getProviderId());
     }
 }
