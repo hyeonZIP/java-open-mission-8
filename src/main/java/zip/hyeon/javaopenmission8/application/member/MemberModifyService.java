@@ -1,5 +1,6 @@
 package zip.hyeon.javaopenmission8.application.member;
 
+import jakarta.validation.Valid;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class MemberModifyService implements MemberRegister {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member registerOrUpdate(MemberRegisterRequest request) {
+    public Member registerOrUpdate(@Valid MemberRegisterRequest request) {
         Member member = memberRepository
                 .findByProviderAndProviderId(request.provider(), request.providerId())
                 .map(existingMember -> updateExistingMember(existingMember, request))
