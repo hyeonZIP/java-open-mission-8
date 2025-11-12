@@ -11,13 +11,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import zip.hyeon.javaopenmission8.adapter.security.handler.CustomFailureHandler;
+import zip.hyeon.javaopenmission8.adapter.security.handler.CustomSuccessHandler;
+import zip.hyeon.javaopenmission8.adapter.security.service.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig<S extends Session> {
-
+    private final CustomOAuth2UserService customOAuth2UserService;
     private final FindByIndexNameSessionRepository<S> sessionRepository;
+    private final CustomSuccessHandler customSuccessHandler;
+    private final CustomFailureHandler customFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,12 +43,12 @@ public class SecurityConfig<S extends Session> {
                         .loginPage("/login")
                         .authorizationEndpoint(authorization -> authorization.baseUri("/login"))
                         .redirectionEndpoint(redirection -> redirection.baseUri("/login/code/{registrationId}"))
-                        .userInfoEndpoint(userinfo -> userinfo.userService(customOAuth2UserService()))
-                        .failureHandler(customFailureHandler())
-                        .successHandler(customSuccessHandler()));
+                        .userInfoEndpoint(userinfo -> userinfo.userService(customOAuth2UserService))
+                        .failureHandler(customFailureHandler)
+                        .successHandler(customSuccessHandler));
         http// 인가 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/home", "/error", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/login", "/home").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();
@@ -52,21 +57,6 @@ public class SecurityConfig<S extends Session> {
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SpringSessionBackedSessionRegistry<>(sessionRepository);
-    }
-
-    @Bean
-    public CustomOAuth2UserService customOAuth2UserService() {
-        return new CustomOAuth2UserService();
-    }
-
-    @Bean
-    public CustomFailureHandler customFailureHandler() {
-        return new CustomFailureHandler();
-    }
-
-    @Bean
-    public CustomSuccessHandler customSuccessHandler() {
-        return new CustomSuccessHandler();
     }
 }
 
