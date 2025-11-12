@@ -51,7 +51,8 @@ class MemberTest {
         Provider previousProvider = member.getProvider();
         String providerId = member.getProviderId();
 
-        MemberRegisterRequest updateRequest = MemberFixture.updateMemberRegisterRequest();
+        MemberRegisterRequest updateRequest = MemberFixture.createMemberRegisterRequest("updateUsername",
+                "updateImage");
 
         member.update(updateRequest);
 
