@@ -46,6 +46,12 @@ public class Member {
         return member;
     }
 
+    public void update(MemberRegisterRequest request) {
+        state(status == MemberStatus.ACTIVATED, "ACTIVATED 상태가 아닙니다.");
+
+        this.username = requireNonNull(request.username());
+    }
+
     public void activate() {
         state(status != MemberStatus.ACTIVATED, "이미 ACTIVATED 입니다.");
 
