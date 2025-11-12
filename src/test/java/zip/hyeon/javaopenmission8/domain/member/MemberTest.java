@@ -45,4 +45,13 @@ class MemberTest {
 
         assertThatThrownBy(() -> member.deactivate()).isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void updateMember() {
+        MemberRegisterRequest updateRequest = MemberFixture.updateMemberRegisterRequest();
+
+        member.update(updateRequest);
+
+        assertThat(member.getUsername()).isEqualTo(updateRequest.username());
+    }
 }
