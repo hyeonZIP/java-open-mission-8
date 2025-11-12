@@ -57,6 +57,7 @@ public class Member {
         state(status == MemberStatus.ACTIVATED, "ACTIVATED 상태가 아닙니다.");
 
         this.username = requireNonNull(request.username());
+        this.profileImageUrl = request.profileImageUrl();
     }
 
     public void activate() {
