@@ -22,6 +22,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
@@ -31,12 +32,13 @@ public class Member {
     @Column(nullable = false)
     private String username;
 
-    @Column
     private String profileImageUrl;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
@@ -54,20 +56,20 @@ public class Member {
     }
 
     public void update(MemberRegisterRequest request) {
-        state(status == MemberStatus.ACTIVATED, "ACTIVATED 상태가 아닙니다.");
+        state(status == MemberStatus.ACTIVATED, "[ERROR] ACTIVATED 상태가 아닙니다.");
 
         this.username = requireNonNull(request.username());
         this.profileImageUrl = request.profileImageUrl();
     }
 
     public void activate() {
-        state(status != MemberStatus.ACTIVATED, "이미 ACTIVATED 입니다.");
+        state(status != MemberStatus.ACTIVATED, "[ERROR] 이미 ACTIVATED 입니다.");
 
         this.status = MemberStatus.ACTIVATED;
     }
 
     public void deactivate() {
-        state(status == MemberStatus.ACTIVATED, "ACTIVATED 상태가 아닙니다.");
+        state(status == MemberStatus.ACTIVATED, "[ERROR] ACTIVATED 상태가 아닙니다.");
 
         this.status = MemberStatus.DEACTIVATED;
     }
