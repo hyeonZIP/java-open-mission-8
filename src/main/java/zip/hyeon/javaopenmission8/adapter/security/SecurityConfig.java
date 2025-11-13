@@ -55,7 +55,7 @@ public class SecurityConfig<S extends Session> {
 
         http// 인가 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home/**", "/css/**").permitAll()
+                        .requestMatchers("/", "/home/**", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();
