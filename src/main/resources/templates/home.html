@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review With Me</title>
+
+    <!-- Toastify CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+    <!-- 세션 Toast 스크립트 -->
+    <script th:src="@{/js/session-toast.js}"></script>
+</head>
+<body>
+<!-- 네비게이션 바 -->
+<div th:replace="fragments/header :: mainHeader"></div>
+<div class="main-container">
+    <!-- PR 등록 폼 -->
+    <div class="pr-form">
+        <div>
+            <div class="pr-form-label">PR 링크 등록</div>
+            <input type="text" class="pr-form-input"
+                   placeholder="https://github.com/woowacourse-precourse/.../pull/1">
+        </div>
+        <button class="pr-form-btn">로그인 해주세요!</button>
+    </div>
+    <!-- PR 리스트 타이틀, 필터, 검색 등 -->
+    <div class="list-title">Pull Request List</div>
+    <div class="btn-group">
+        <!-- 반복문으로 필터 버튼 생성 가능 -->
+        <th:block th:each="filterBtn : ${filterButtons}">
+            <button th:text="${filterBtn.label}"
+                    th:class="'filter-btn' + (${filterBtn.isActive} ? ' active':'')"></button>
+        </th:block>
+        <!-- 추가 특정 필터, 검색 등 구성 -->
+        <input type="text" class="search-input" th:placeholder="${searchPlaceholder}" th:value="${searchText}">
+        <button class="search-btn">검색</button>
+    </div>
+    <!-- PR 리스트 반복 출력 -->
+    <!--
+        ${prList} : 컨트롤러에서 전달한 PR 리스트
+        각 PR 객체 =
+          - thumbnail
+          - title
+          - meta
+          - stats
+          - message
+          - 상세/리뷰 버튼 액션
+    -->
+    <th:block th:each="pr : ${prList}">
+        <div class="pr-card">
+            <div class="pr-thumbnail">
+                <!-- 썸네일 이미지 삽입 가능 -->
+                <!-- <img th:src="${pr.thumbnail}" width="70" height="70" /> -->
+            </div>
+            <div class="pr-content">
+                <div class="pr-title" th:text="${pr.title}">PR 제목</div>
+                <div class="pr-meta" th:text="${pr.meta}">작성자, 시간</div>
+                <div class="pr-stats" th:text="${pr.stats}">커밋, 리뷰, 참여자 수</div>
+                <div class="pr-message" th:text="${pr.message}">리뷰 메시지/내용</div>
+            </div>
+            <div class="pr-actions">
+                <button class="pr-action-btn" th:text="'상세보기'"
+                        th:onclick="'location.href=\'/detail/' + ${pr.id} + '\';'"></button>
+                <button class="pr-action-btn" th:text="'리뷰하러 가기'"
+                        th:onclick="'location.href=\'/review/' + ${pr.id} + '\';'"></button>
+            </div>
+        </div>
+    </th:block>
+    <!-- 끝 -->
+</div>
+<script th:inline="javascript">
+    const sessionError = /*[[${param.sessionError}]]*/ null;
+
+    if (sessionError) {
+        let message = sessionError === 'expired'
+            ? '⚠️ 세션이 만료되었습니다.'
+            : '⚠️ 세션이 유효하지 않습니다.';
+
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#ff4444",
+        }).showToast();
+    }
+</script>
+</body>
+</html>

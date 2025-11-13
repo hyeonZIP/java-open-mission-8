@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review With Me</title>
+
+    <!-- Toastify CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
+
+    <!-- 세션 Toast 스크립트 -->
+    <script th:src="@{/js/session-toast.js}"></script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: mainHeader}"></div>
+<div class="container">
+    <div class="main-title">Review With Me</div>
+    <div class="main-desc-box">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+    </div>
+    <button class="review-btn" onclick="location.href='/home'">Review</button>
+</div>
+</body>
+</html>

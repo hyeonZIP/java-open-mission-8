@@ -1,0 +1,140 @@
+.main-container {
+    padding: 48px 48px 0 48px;
+}
+
+.pr-form {
+    background: #232429;
+    padding: 32px 32px 32px 32px;
+    margin-bottom: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.pr-form-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.pr-form-input {
+    flex: 1;
+    background: #35363a;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    color: #bcbcbc;
+    border-radius: 4px;
+    margin-right: 36px;
+}
+
+.pr-form-btn {
+    background: #5499ef;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.list-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn-group {
+    margin-bottom: 18px;
+}
+
+.search-input {
+    background: #35363a;
+    color: #bcbcbc;
+    border: none;
+    border-radius: 3px;
+    padding: 7px 16px;
+    margin-left: 6px;
+    font-size: 13px;
+    width: 130px;
+}
+
+.search-btn {
+    background: #35363a;
+    color: #bcbcbc;
+    border: none;
+    border-radius: 3px;
+    padding: 7px 16px;
+    margin-left: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.pr-card {
+    background: #232429;
+    margin-bottom: 22px;
+    border-radius: 6px;
+    padding: 22px 20px;
+    display: flex;
+}
+
+.pr-thumbnail {
+    width: 70px;
+    height: 70px;
+    background: #34353a;
+    border-radius: 6px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.pr-content {
+    flex: 1;
+}
+
+.pr-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.pr-meta {
+    font-size: 13px;
+    color: #bcbcbc;
+    margin-bottom: 7px;
+}
+
+.pr-stats {
+    font-size: 13px;
+    color: #7bacfc;
+    margin-bottom: 8px;
+}
+
+.pr-message {
+    background: #35363a;
+    color: #fff;
+    border-radius: 3px;
+    padding: 10px 14px;
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.pr-actions {
+    display: flex;
+    flex-direction: column;
+    margin-left: 18px;
+}
+
+.pr-action-btn {
+    background: #35363a;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 9px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.pr-action-btn:last-child {
+    margin-bottom: 0;
+}
