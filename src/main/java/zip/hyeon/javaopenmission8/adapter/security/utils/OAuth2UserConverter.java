@@ -21,10 +21,20 @@ public class OAuth2UserConverter {
     }
 
     private static OAuth2UserConverterResponse ofGithub(Map<String, Object> attributes) {
-        String githubId = String.valueOf(attributes.get(GITHUB_PROVIDER_ID));
-        String username = String.valueOf(attributes.get(GITHUB_USERNAME));
-        String profileImageUrl = String.valueOf(attributes.get(GITHUB_PROFILE_IMAGE_URL));
+        String githubId = getAttribute(attributes, GITHUB_PROVIDER_ID);
+        String username = getAttribute(attributes, GITHUB_USERNAME);
+        String profileImageUrl = getAttribute(attributes, GITHUB_PROFILE_IMAGE_URL);
 
         return new OAuth2UserConverterResponse(attributes, Provider.GITHUB, githubId, username, profileImageUrl);
+    }
+
+    private static String getAttribute(Map<String, Object> attributes, String key) {
+        Object value = attributes.get(key);
+
+        if (value == null) {
+            throw new IllegalArgumentException("[ERROR] Github OAuth2 응답에 " + key + " 속성이 없습니다.");
+        }
+
+        return String.valueOf(value);
     }
 }
