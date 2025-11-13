@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import zip.hyeon.javaopenmission8.adapter.security.dto.OAuth2UserConverterResponse;
 import zip.hyeon.javaopenmission8.domain.member.MemberRole;
-import zip.hyeon.javaopenmission8.domain.member.Provider;
 
 @Getter
 @RequiredArgsConstructor
@@ -20,16 +19,14 @@ public class CustomOAuth2User implements OAuth2User, Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Map<String, Object> attributes;
-    private final Provider provider;
-    private final String providerId;
+    private final Long memberId;
     private final String name;
     private final List<GrantedAuthority> authorities;
 
-    public static CustomOAuth2User of(OAuth2UserConverterResponse response) {
+    public static CustomOAuth2User of(OAuth2UserConverterResponse response, Long memberId) {
         return new CustomOAuth2User(
                 response.attributes(),
-                response.provider(),
-                response.providerId(),
+                memberId,
                 response.username(),
                 List.of(new SimpleGrantedAuthority(MemberRole.ROLE_MEMBER.name())));
     }

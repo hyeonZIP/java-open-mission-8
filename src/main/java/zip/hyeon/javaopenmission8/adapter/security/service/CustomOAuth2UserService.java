@@ -10,6 +10,7 @@ import zip.hyeon.javaopenmission8.adapter.security.detail.CustomOAuth2User;
 import zip.hyeon.javaopenmission8.adapter.security.dto.OAuth2UserConverterResponse;
 import zip.hyeon.javaopenmission8.adapter.security.utils.OAuth2UserConverter;
 import zip.hyeon.javaopenmission8.application.member.provided.MemberRegister;
+import zip.hyeon.javaopenmission8.domain.member.Member;
 import zip.hyeon.javaopenmission8.domain.member.MemberRegisterRequest;
 
 @Service
@@ -24,15 +25,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2UserConverterResponse response = OAuth2UserConverter.convert(registrationId, oAuth2User);
 
-        memberRegisterOrUpdate(response);
+        Member member = memberRegisterOrUpdate(response);
 
-        return CustomOAuth2User.of(response);
+        return CustomOAuth2User.of(response, member.getId());
     }
 
-    private void memberRegisterOrUpdate(OAuth2UserConverterResponse response) {
+    private Member memberRegisterOrUpdate(OAuth2UserConverterResponse response) {
         MemberRegisterRequest request = MemberRegisterRequest.of(response);
 
-        memberRegister.registerOrUpdate(request);
+        return memberRegister.registerOrUpdate(request);
     }
 
     private String extractRegistrationId(OAuth2UserRequest userRequest) {
