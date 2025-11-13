@@ -1,0 +1,64 @@
+body {
+    background-color: #212225;
+    color: #fff;
+    font-family: 'Noto Sans KR', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background: #191a1d;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 16px;
+}
+
+.navbar-menu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-menu a {
+    color: #bcbcbc;
+    text-decoration: none;
+    margin-right: 24px;
+    font-size: 14px;
+}
+
+.navbar-menu a:last-child {
+    margin-right: 0;
+    color: #5499ef;
+}
+
+/* Toast 스타일도 공통으로 */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4444;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 9999;
+    animation: slideIn 0.3s ease-out;
+    font-size: 14px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

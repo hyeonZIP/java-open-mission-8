@@ -1,13 +1,25 @@
-<!-- 헤더 fragment (header.html) -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="mainHeader">
     <div class="navbar">
         <div class="navbar-title">Review With Me</div>
         <div class="navbar-menu">
             <a th:href="@{/home}">홈</a>
             <a th:href="@{/ranking}">랭킹</a>
-            <a th:href="@{/login/github}">로그인</a>
+
+            <!-- 로그인된 경우 -->
+            <th:block sec:authorize="isAuthenticated()">
+                <span sec:authentication="principal.attributes['login']"
+                      style="color: #fff; margin-right: 12px;"></span>
+                <img th:src="${#authentication.principal.attributes['avatar_url']}"
+                     style="width: 32px; height: 32px; border-radius: 50%; margin-right: 12px; vertical-align: middle;">
+                <a th:href="@{/logout}">로그아웃</a>
+            </th:block>
+
+            <!-- 로그인 안된 경우 -->
+            <a sec:authorize="!isAuthenticated()"
+               th:href="@{/login/github}">로그인</a>
         </div>
     </div>
 </th:block>
