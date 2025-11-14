@@ -2,6 +2,7 @@ package zip.hyeon.javaopenmission8.domain.post;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static java.util.Objects.requireNonNull;
+import static org.springframework.util.Assert.state;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,5 +56,11 @@ public class Post {
         post.totalReviewedMember = 0;
 
         return post;
+    }
+
+    public void delete() {
+        state(status != PostStatus.DELETED, "[ERROR] 이미 삭제된 게시글입니다");
+
+        status = PostStatus.DELETED;
     }
 }
