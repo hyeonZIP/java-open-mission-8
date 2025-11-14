@@ -59,8 +59,14 @@ public class Post {
     }
 
     public void delete() {
-        state(status != PostStatus.DELETED, "[ERROR] 이미 삭제된 게시글입니다");
+        state(status != PostStatus.DELETED, "[ERROR] 이미 삭제된 게시글 입니다");
 
         status = PostStatus.DELETED;
+    }
+
+    public void activate() {
+        state(status != PostStatus.ACTIVATED, "[ERROR] 이미 활성화된 게시글 입니다");
+
+        status = PostStatus.ACTIVATED;
     }
 }
