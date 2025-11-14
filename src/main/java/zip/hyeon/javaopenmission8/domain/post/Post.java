@@ -1,6 +1,7 @@
 package zip.hyeon.javaopenmission8.domain.post;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static java.util.Objects.requireNonNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,4 +43,17 @@ public class Post {
     private int totalReviewCommentCount;
 
     private int totalReviewedMember;
+
+    public static Post create(PostCreateRequest request) {
+        Post post = new Post();
+
+        post.member = requireNonNull(request.member());
+        post.pullRequestUrl = requireNonNull(request.pullRequestUrl());
+        post.tag = requireNonNull(request.tag());
+        post.status = PostStatus.ACTIVATED;
+        post.totalReviewCommentCount = 0;
+        post.totalReviewedMember = 0;
+
+        return post;
+    }
 }
